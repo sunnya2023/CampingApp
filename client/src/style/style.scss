@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+@import "./responsive.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  //   font-family: "Nunito", sans-serif;
+  font-family: "Montserrat", sans-serif;
+}
+
+// All project colors
+root {
+  --primaryColor: hsl(14, 90%, 53%);
+  --primaryColorLight: hsl(14, 96%, 91%);
+  --bgColor: hsl(0, 0%, 100%);
+  --formColor: hs1(20, 42%, 87%);
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: Ohsl(0, 0%, 18%);
+  --greyText: Ohsl(0, 0%, 51%);
+  --inputColor: hsl(330, 0.12%, 0.97%);
+  --cardColor: hsl(300, 0.3%, 0.94%);
+
+  // font
+  --biggestFontSize: 0.2.5rem;
+  --h1FontSize: 2rem;
+  --h2FontSize: 1.25rem;
+  --h3FontSize: 1rem;
+  --normalFontSize: 0.938rem;
+  --smallFontSize: 0.813rem;
+  --smallestFontSize: 0.75rem;
+  --borderRadius: 0.3rem;
+}
+
+body {
+  background: var(--bgColor);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+li {
+  line-height: none;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+input {
+  outline: none;
+}
+
+.section {
+  padding: 4rem 0 2rem;
+}
+
+.container {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+::selection {
+  background: var(--primaryColorLight);
+  color: var(--primaryColor);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: var(--primaryColorLight);
+}
+
+::-webkit-scrollbar-thumb {
+  width: 10px;
+  background: var(--primaryColor);
+  border-radius: var(--borderRadius);
+}

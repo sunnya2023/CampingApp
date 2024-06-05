@@ -1,0 +1,30 @@
+@import "./style.scss";
+
+.register {
+  .content {
+    padding: 4rem;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    @include sm {
+      width: 60%;
+    }
+
+    #profileImg {
+      display: none;
+    }
+    label {
+      cursor: pointer;
+    }
+
+    img {
+      width: 5rem;
+      height: 5rem;
+      object-fit: cover;
+    }
+  }
+}
