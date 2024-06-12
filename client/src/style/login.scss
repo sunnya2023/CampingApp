@@ -1,0 +1,12 @@
+.login {
+  .content {
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    p {
+      margin-top: 1rem;
+    }
+  }
+}

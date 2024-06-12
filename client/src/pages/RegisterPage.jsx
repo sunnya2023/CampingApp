@@ -35,15 +35,13 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const registerForm = new FormData();
     try {
-      const registerForm = new FormData();
-
       for (var key in formData) {
         registerForm.append(key, formData[key]);
       }
 
-      const res = await fetch("api/auth/register", {
+      const res = await fetch("/api/auth/register", {
         method: "POST",
         body: registerForm,
       });
