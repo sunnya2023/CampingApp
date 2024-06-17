@@ -3,3 +3,14 @@ img {
   height: 10rem;
   object-fit: cover;
 }
+
+.facility {
+  .facility-item {
+    width: 8rem;
+    border: 1px solid gray;
+    display: flex;
+    &.selected {
+      border: 1px solid red;
+    }
+  }
+}

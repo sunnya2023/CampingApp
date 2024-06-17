@@ -5,11 +5,15 @@ import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { IoIosImages } from "react-icons/io";
 import { BiTrash } from "react-icons/bi";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CreateListing = () => {
+  const navigate = useNavigate();
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
 
+  console.log(category);
   // Location
   const [formLocation, setFormLocation] = useState({
     streetAddress: "",
@@ -65,10 +69,68 @@ const CreateListing = () => {
   const handleRemovePhoto = (indexToRemove) => {
     setPhotos((prev) => prev.filter((_, index) => index !== indexToRemove));
   };
+
+  // Descripntion
+  const [formDesc, setFormDesc] = useState({
+    title: "",
+    description: "",
+    highlight: "",
+    highlightDesc: "",
+    price: 0,
+  });
+
+  const handleChangDesc = (e) => {
+    const { name, value } = e.target;
+    setFormDesc({ ...formDesc, [name]: value });
+  };
+
+  // console.log(formDesc);
+
+  const creatorId = useSelector((state) => state.user._id);
+  const handlePost = async (e) => {
+    e.preventDefault();
+    try {
+      // Create a new FormData onject to handle file uploads
+      const listForm = new FormData();
+      listForm.append("creator", creatorId);
+      listForm.append("category", category);
+      listForm.append("type", type);
+      listForm.append("streetAddress", formLocation.streetAddress);
+      listForm.append("apt", formLocation.apt);
+      listForm.append("city", formLocation.city);
+      listForm.append("province", formLocation.province);
+      listForm.append("country", formLocation.country);
+      listForm.append("guestCount", guestCount);
+      listForm.append("bedroomCount", bedroomCount);
+      listForm.append("bedCount", bedCount);
+      listForm.append("bathroomCount", bathCount);
+      listForm.append("facility", facility);
+      listForm.append("title", formDesc.title);
+      listForm.append("description", formDesc.description);
+      listForm.append("highlight", formDesc.highlight);
+      listForm.append("highlightDesc", formDesc.highlightDesc);
+      listForm.append("price", formDesc.price);
+
+      // append each selected photos to the FormData object
+      photos.forEach((photo) => listForm.append("listingPhotos", photo));
+
+      // Send a POST request to server
+      const res = await fetch("/api/list/create", {
+        method: "POST",
+        body: listForm,
+      });
+      // const data = await res.json();
+      if (res.ok) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log("리스트 생성 실패", error.message);
+    }
+  };
   return (
     <div>
       <h1>Publish Ypur Place</h1>
-      <form>
+      <form onSubmit={handlePost}>
         <div className="step">
           <h2>Step1:Tell us about your place</h2>
           <hr />
@@ -232,7 +294,9 @@ const CreateListing = () => {
           <div className="facility">
             {facilities?.map((item, index) => (
               <div
-                className="facility-item"
+                className={`facility-item ${
+                  facility.includes(item.name) ? "selected" : ""
+                }`}
                 key={index}
                 onClick={() => handleSeletFacility(item.name)}
               >
@@ -324,7 +388,14 @@ const CreateListing = () => {
           <div className="description">
             <div className="desc">
               <p>Title</p>
-              <input type="text" placeholder="Title" name="title" required />
+              <input
+                type="text"
+                placeholder="Title"
+                name="title"
+                value={formDesc.title}
+                required
+                onChange={handleChangDesc}
+              />
             </div>
             <div className="desc">
               <p>Description</p>
@@ -332,7 +403,9 @@ const CreateListing = () => {
                 type="text"
                 placeholder="Description"
                 name="description"
+                value={formDesc.description}
                 required
+                onChange={handleChangDesc}
               />
             </div>
             <div className="desc">
@@ -341,7 +414,9 @@ const CreateListing = () => {
                 type="text"
                 placeholder="Highlight"
                 name="highlight"
+                value={formDesc.highlight}
                 required
+                onChange={handleChangDesc}
               />
             </div>
             <div className="desc">
@@ -350,16 +425,27 @@ const CreateListing = () => {
                 type="text"
                 placeholder="Highlight details"
                 name="highlightDesc"
+                value={formDesc.highlightDetails}
                 required
+                onChange={handleChangDesc}
               />
             </div>
             <div className="desc">
               <p>Now, set your PRICE</p>
               <span>$</span>
-              <input type="number" placeholder="100" name="price" required />
+              <input
+                type="number"
+                placeholder="100"
+                name="price"
+                value={formDesc.price}
+                min={0}
+                required
+                onChange={handleChangDesc}
+              />
             </div>
           </div>
         </div>
+        <button>리스트 만들기</button>
       </form>
     </div>
   );
