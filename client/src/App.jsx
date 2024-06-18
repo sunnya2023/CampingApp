@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./component/navbar/Navbar";
 import CreateListing from "./pages/CreateListing";
+import ListingDetails from "./pages/ListingDetails";
 
 const Layout = () => {
   return (
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/create-list",
         element: <CreateListing />,
+      },
+      {
+        path: "/list/:id",
+        element: <ListingDetails />,
       },
     ],
   },
