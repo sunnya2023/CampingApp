@@ -95,4 +95,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+// listing Detail
+router.get("/:listingId", async (req, res) => {
+  try {
+    const { listingId } = req.params;
+    const listing = await List.findById(listingId);
+    res.status(200).json(listing);
+  } catch (error) {
+    console.log("리스트를 가져오는데 실패하였습니다", error.message);
+    res.status(500).json({ message: "Internal Server error" });
+  }
+});
+
 module.exports = router;

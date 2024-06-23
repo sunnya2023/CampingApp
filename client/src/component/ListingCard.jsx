@@ -5,9 +5,11 @@ import {
   ArrowBackIosNew,
   Favorite,
 } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+
 const ListingCard = ({ list }) => {
   const [imgIndex, setImgIndex] = useState(0);
-
+  const navigate = useNavigate();
   const goToPrevSlide = () => {
     setImgIndex(
       (prev) => (prev - 1 + list.photoPath.length) % list.photoPath.length
@@ -18,11 +20,17 @@ const ListingCard = ({ list }) => {
   };
 
   return (
-    <div className="listing-card">
+    <div
+      className="listing-card"
+      onClick={() => {
+        navigate(`/list/${list._id}`);
+      }}
+    >
       <div className="slider-container">
         <div className="slider">
           {list.photoPath.map((photo, index) => (
             <div
+              key={index}
               className="slide"
               style={{ transform: `translateX(-${imgIndex * 100}%)` }}
             >
